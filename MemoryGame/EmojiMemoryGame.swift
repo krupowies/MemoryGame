@@ -9,9 +9,9 @@
 import SwiftUI
 
 //This is ViewModel in MVVM !
-class EmojiMemoryGame {
+class EmojiMemoryGame: ObservableObject {
     
-    private var model: Game<String> = EmojiMemoryGame.createMemoryGame()
+    @Published private var model: Game<String> = EmojiMemoryGame.createMemoryGame()
         
     static func createMemoryGame() -> Game<String> {
         let emojis = ["👻", "🎃", "🦇","🕸" , "⚰️"]
@@ -20,6 +20,7 @@ class EmojiMemoryGame {
             return emojis[pairIndex]
         }
     }
+    
     
     // MARK: - Access to the model
     
