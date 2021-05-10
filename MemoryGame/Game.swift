@@ -9,13 +9,36 @@
 import Foundation
 
 //This is the Model in MVVM !
-struct Game<CardContent> {
+struct Game<CardContent> where CardContent : Equatable {
     var cards: Array<Card>
+    
+    var indexOfTheOneFaceUpCard: Int? {
+        get { cards.indices.filter { cards[$0].isFaceUp}.only }
+        
+        set {
+            for index in cards.indices {
+                if index == newValue {
+                    cards[index].isFaceUp = true
+                } else {
+                    cards[index].isFaceUp = false
+                }
+            }
+        }
+    }
     
     mutating func choose(card: Card) {
         print("Card chosen: \(card)")
-        let chosenIndex: Int = cards.firstIndex(matching: card)
-        self.cards[chosenIndex].isFaceUp = !self.cards[chosenIndex].isFaceUp
+        if let chosenIndex: Int = cards.firstIndex(matching: card), !cards[chosenIndex].isFaceUp, !cards[chosenIndex].isMatched {
+            if let potencialMatchedCard = indexOfTheOneFaceUpCard {
+                if cards[chosenIndex].content == cards[potencialMatchedCard].content {
+                    cards[chosenIndex].isMatched = true
+                    cards[potencialMatchedCard].isMatched = true
+                }
+                self.cards[chosenIndex].isFaceUp = true
+            } else {
+                indexOfTheOneFaceUpCard = chosenIndex
+            }
+        }
     }
     
     init(numberOfPairsOfCards: Int, cardContentSource: (Int) -> CardContent)  {
@@ -29,7 +52,7 @@ struct Game<CardContent> {
     }
     
     struct Card: Identifiable{
-        var isFaceUp: Bool = true
+        var isFaceUp: Bool = false
         var isMatched: Bool = false
         var content: CardContent
         var id: Int
