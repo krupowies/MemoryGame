@@ -14,17 +14,8 @@ struct Game<CardContent> {
     
     mutating func choose(card: Card) {
         print("Card chosen: \(card)")
-        let chosenIndex: Int = self.index(of: card) ?? 0
+        let chosenIndex: Int = cards.firstIndex(matching: card)
         self.cards[chosenIndex].isFaceUp = !self.cards[chosenIndex].isFaceUp
-    }
-    
-    func index(of card: Card) -> Int? { //external&internal name here !
-        for index in 0...self.cards.count{
-            if self.cards[index].id == card.id{
-                return index
-            }
-        }
-        return nil
     }
     
     init(numberOfPairsOfCards: Int, cardContentSource: (Int) -> CardContent)  {
