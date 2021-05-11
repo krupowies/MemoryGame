@@ -11,15 +11,30 @@ import SwiftUI
 //This is ViewModel in MVVM !
 class EmojiMemoryGame: ObservableObject {
     
-    @Published private var model: Game<String> = EmojiMemoryGame.createMemoryGame()
+    var currentTheme: EmojiMemoryGameTheme
+    @Published private var model: Game<String>
         
-    static func createMemoryGame() -> Game<String> {
-        let emojis = ["👻", "🎃", "🦇","🕸" , "⚰️"]
+//    static func createMemoryGame() -> Game<String> {
+//        let emojis = ["👻", "🎃", "🦇","🕸" , "⚰️"]
+//        let emojisNumber = 5//Int.random(in: 2...5)
+//        return Game<String>(numberOfPairsOfCards: emojisNumber) { pairIndex in
+//            return emojis[pairIndex]
+//        }
+//    }
+    
+    init(){
+        self.currentTheme = EmojiMemoryGameTheme.themes.randomElement()!
+        model = EmojiMemoryGame.createMemoryGame(with: currentTheme)
+    }
+    
+    static func createMemoryGame(with theme: EmojiMemoryGameTheme) ->Game<String> {
+        let emojis = theme.emojis
         let emojisNumber = 5//Int.random(in: 2...5)
         return Game<String>(numberOfPairsOfCards: emojisNumber) { pairIndex in
-            return emojis[pairIndex]
+                    return emojis[pairIndex]
         }
     }
+    
     
     
     // MARK: - Access to the model
@@ -34,7 +49,7 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     func newGame(){
-        model = EmojiMemoryGame.createMemoryGame()
+        model = EmojiMemoryGame.createMemoryGame(with: EmojiMemoryGameTheme.themes.randomElement()!)
     }
     
 }
