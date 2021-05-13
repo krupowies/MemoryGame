@@ -11,6 +11,7 @@ import Foundation
 //This is the Model in MVVM !
 struct Game<CardContent> where CardContent : Equatable {
     var cards: Array<Card>
+    var score: Int
     
     var indexOfTheOneFaceUpCard: Int? {
         get { cards.indices.filter { cards[$0].isFaceUp}.only }
@@ -33,15 +34,17 @@ struct Game<CardContent> where CardContent : Equatable {
                 if cards[chosenIndex].content == cards[potencialMatchedCard].content {
                     cards[chosenIndex].isMatched = true
                     cards[potencialMatchedCard].isMatched = true
+                    score = score + 1
                 }
                 self.cards[chosenIndex].isFaceUp = true
             } else {
-                indexOfTheOneFaceUpCard = chosenIndex
+                indexOfTheOneFaceUpCard = chosenIndex                
             }
         }
     }
     
     init(numberOfPairsOfCards: Int, cardContentSource: (Int) -> CardContent)  {
+        score = 0
         cards = Array<Card>()
         for pairIndex in 0..<numberOfPairsOfCards {
             let content = cardContentSource(pairIndex)

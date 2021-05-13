@@ -29,7 +29,7 @@ class EmojiMemoryGame: ObservableObject {
     
     static func createMemoryGame(with theme: EmojiMemoryGameTheme) ->Game<String> {
         let emojis = theme.emojis
-        let emojisNumber = 5//Int.random(in: 2...5)
+        let emojisNumber = Int.random(in: 2...5)
         return Game<String>(numberOfPairsOfCards: emojisNumber) { pairIndex in
                     return emojis[pairIndex]
         }
@@ -39,9 +39,10 @@ class EmojiMemoryGame: ObservableObject {
     
     // MARK: - Access to the model
     
-    var cards: Array<Game<String>.Card> {
-        model.cards //one-liner so we can omit 'return' word 
-    }
+    var cards: Array<Game<String>.Card> { model.cards } //one-liner so we can omit 'return' word
+    
+    var currentScore: Int { model.score }
+    
     
     // MARK: - Intents
     func choose(card: Game<String>.Card){
@@ -49,7 +50,9 @@ class EmojiMemoryGame: ObservableObject {
     }
     
     func newGame(){
-        model = EmojiMemoryGame.createMemoryGame(with: EmojiMemoryGameTheme.themes.randomElement()!)
+        currentTheme = EmojiMemoryGameTheme.themes.randomElement()!
+        model = EmojiMemoryGame.createMemoryGame(with: currentTheme)
+        //model = EmojiMemoryGame.createMemoryGame(with: EmojiMemoryGameTheme.themes.randomElement()!)
     }
     
 }

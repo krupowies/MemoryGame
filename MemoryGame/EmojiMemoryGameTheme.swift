@@ -13,11 +13,11 @@ struct EmojiMemoryGameTheme{
     var name: String
     var emojis: [String]
     var emojisNumber: Int?
-    var color: UIColor
+    var color: Color
     
-    static let animals = EmojiMemoryGameTheme(name: "animals", emojis: ["🐮", "🦦", "🐙", "🦄", "🐬"], emojisNumber: nil, color: .systemPink)
+    static let animals = EmojiMemoryGameTheme(name: "animals", emojis: ["🐮", "🦦", "🐙", "🦄", "🐬"], emojisNumber: nil, color: .pink)
     static let food = EmojiMemoryGameTheme(name: "food", emojis: ["🥨", "🥕", "🍌", "🍇", "🍉"], emojisNumber: nil, color: .yellow)
-    static let sports = EmojiMemoryGameTheme(name: "sports", emojis: ["🏀", "🎾", "🥌", "🚴🏼", "🏊🏼"], emojisNumber: nil, color: .systemRed)
+    static let sports = EmojiMemoryGameTheme(name: "sports", emojis: ["🏀", "🎾", "🥌", "🚴🏼", "🏊🏼"], emojisNumber: nil, color: .red)
     static let places = EmojiMemoryGameTheme(name: "places", emojis: ["🏕", "🕍", "🏦", "🏡", "🏝"], emojisNumber: nil, color: .green)
     
     static var themes = [animals, food, sports, places]
