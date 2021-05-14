@@ -10,10 +10,10 @@ import Foundation
 
 //This is the Model in MVVM !
 struct Game<CardContent> where CardContent : Equatable {
-    var cards: Array<Card>
+    private(set) var cards: Array<Card>
     var score: Int
     
-    var indexOfTheOneFaceUpCard: Int? {
+    private var indexOfTheOneFaceUpCard: Int? {
         get { cards.indices.filter { cards[$0].isFaceUp}.only }
         
         set {
